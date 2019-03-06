@@ -6,7 +6,6 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
   bool _isFavorited = true;
   int _favoriteCount = 41;
   bool _upFlag = false;
-  
 
   void _toggleFavorite() {
     setState(() {
@@ -17,15 +16,13 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       //    _favoriteCount +=1;
       //    _isFavorited = true;
       //  }
-      if(_favoriteCount>=99){
-          _upFlag=false;
-      }
-      else{
-        if(_favoriteCount==0){
-          _favoriteCount=0;
-          _upFlag=true;
-          _isFavorited=true;
-          
+      if (_favoriteCount >= 99) {
+        _upFlag = false;
+      } else {
+        if (_favoriteCount == 0) {
+          _favoriteCount = 0;
+          _upFlag = true;
+          _isFavorited = true;
         }
       }
       if (_upFlag) {
@@ -47,20 +44,18 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
 
   void _resetFavoriteCount() {
     setState(() {
-        _upFlag = true;
-        _favoriteCount = 0;
-        _isFavorited = true;
+      _upFlag = true;
+      _favoriteCount = 0;
+      _isFavorited = true;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-       Container(
+        Container(
           padding: EdgeInsets.all(0),
           child: IconButton(
             icon: (Icon(Icons.delete)),
@@ -68,7 +63,6 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
             onPressed: _resetFavoriteCount,
           ),
         ),
-        
         Container(
           padding: EdgeInsets.all(0),
           child: IconButton(
@@ -82,10 +76,9 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
         Container(
           padding: EdgeInsets.all(0),
           child: IconButton(
-            icon: (_upFlag ? Icon(Icons.star) : Icon(Icons.star_border)),
-            color: Colors.red[500],
-            onPressed: _toggleFavorite
-          ),
+              icon: (_upFlag ? Icon(Icons.star) : Icon(Icons.star_border)),
+              color: Colors.red[500],
+              onPressed: _toggleFavorite),
         ),
         SizedBox(
             width: 18,
@@ -103,8 +96,41 @@ class FavoriteWidget extends StatefulWidget {
   _FavoriteWidgetState createState() => _FavoriteWidgetState();
 }
 
+class _MGFloatingButtonState extends State<MGFloatingButton>{
+   bool _dataflag =false;
+
+   void _togglePressed(){
+
+      setState(() {
+        _dataflag = !_dataflag;
+      });
+
+   }
+
+   Widget build(BuildContext context){
+
+      return FloatingActionButton(
+        child: Icon(_dataflag?Icons.android:Icons.check_circle),
+        onPressed: _togglePressed,);
+   }
+
+}
+
+
+
+//Stateful Floating Button Widget
+class MGFloatingButton extends StatefulWidget {
+
+  @override
+  _MGFloatingButtonState createState() => _MGFloatingButtonState();
+
+
+
+}
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     Column _buildButtonColumn(Color color, IconData icon, String label) {
@@ -224,7 +250,8 @@ class MyApp extends StatelessWidget {
                 imageSection,
                 titleSection,
                 buttonSection,
-                textSection
+                textSection,
+                new MGFloatingButton(),
               ],
             )));
   }
