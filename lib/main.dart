@@ -2,6 +2,107 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+  bool _upFlag = false;
+  
+
+  void _toggleFavorite() {
+    setState(() {
+      //  if(_isFavorited){
+      //    _favoriteCount -=1;
+      //    _isFavorited = false;
+      //  } else {
+      //    _favoriteCount +=1;
+      //    _isFavorited = true;
+      //  }
+      if(_favoriteCount>=99){
+          _upFlag=false;
+      }
+      else{
+        if(_favoriteCount==0){
+          _favoriteCount=0;
+          _upFlag=true;
+          _isFavorited=true;
+          
+        }
+      }
+      if (_upFlag) {
+        _favoriteCount += 1;
+      } else {
+        _favoriteCount -= 1;
+      }
+
+      _isFavorited = !_isFavorited;
+    });
+  }
+
+// toggle button for ascending and descending
+  void _toggleUpDownFlag() {
+    setState(() {
+      _upFlag = !_upFlag;
+    });
+  }
+
+  void _resetFavoriteCount() {
+    setState(() {
+        _upFlag = true;
+        _favoriteCount = 0;
+        _isFavorited = true;
+    });
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+       Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (Icon(Icons.delete)),
+            color: Colors.indigo[800],
+            onPressed: _resetFavoriteCount,
+          ),
+        ),
+        
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_upFlag
+                ? Icon(Icons.radio_button_checked)
+                : Icon(Icons.radio_button_unchecked)),
+            color: Colors.amber[600],
+            onPressed: _toggleUpDownFlag,
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_upFlag ? Icon(Icons.star) : Icon(Icons.star_border)),
+            color: Colors.red[500],
+            onPressed: _toggleFavorite
+          ),
+        ),
+        SizedBox(
+            width: 18,
+            child: Container(
+              child: Text('$_favoriteCount'),
+            )),
+      ],
+    );
+  }
+}
+
+//Statefull Widget
+class FavoriteWidget extends StatefulWidget {
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -37,7 +138,7 @@ class MyApp extends StatelessWidget {
             'half-hour walk through pastures and pine forest, leads you to the '
             'lake, which warms to 20 degrees Celsius in the summer. Activities '
             'enjoyed here include rowing, and riding the summer toboggan run.',*/
-            'Image of Chen the brew master from World of War Craft',
+        'Image of Chen the brew master from World of War Craft',
         softWrap: true,
       ),
     );
@@ -71,11 +172,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           /*3*/
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          Text('41'),
+          FavoriteWidget(),
         ],
       ),
     );
@@ -94,19 +191,14 @@ class MyApp extends StatelessWidget {
     );
 
     Widget imageSection = Container(
-      child: new AspectRatio(
-        aspectRatio: 487/451,
-        child: new Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
-              fit:BoxFit.fitWidth,
-              alignment: FractionalOffset.topCenter,
-              image: AssetImage('images/chen.jpg')
-                            )
-            )
-          )
-        )
-      ); 
+        child: new AspectRatio(
+            aspectRatio: 487 / 451,
+            child: new Container(
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        alignment: FractionalOffset.topCenter,
+                        image: AssetImage('images/chen.jpg'))))));
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
